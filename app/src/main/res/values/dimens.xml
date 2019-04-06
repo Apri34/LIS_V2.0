@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="spinner_height">35sp</dimen>
+    <dimen name="text_view_size">20sp</dimen>
+    <dimen name="tv_table_height">35sp</dimen>
+    <dimen name="margin_table_scrollview">4sp</dimen>
+    <dimen name="button_cards_width">170sp</dimen>
+    <dimen name="button_cards_height">40sp</dimen>
+    <dimen name="button_cards_margin_horizontal">25sp</dimen>
+    <dimen name="button_cards_margin_vertical">40sp</dimen>
+    <dimen name="button_home_width">200sp</dimen>
+    <dimen name="button_home_height">40sp</dimen>
+</resources>

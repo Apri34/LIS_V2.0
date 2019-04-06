@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.HomeActivity">
+
+    <Button
+        android:id="@+id/buttonCards"
+        android:layout_width="@dimen/button_home_width"
+        android:layout_height="@dimen/button_home_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        android:layout_marginTop="40sp"
+        android:background="@drawable/buttonshape3"
+        android:text="@string/button_lernkarteien"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:onClick="openCards" />
+
+    <Button
+        android:id="@+id/buttonSleep"
+        android:layout_width="@dimen/button_home_width"
+        android:layout_height="@dimen/button_home_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCards"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/buttonshape3"
+        android:text="@string/buttonschlafen"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:onClick="openSleep"/>
+
+    <Button
+        android:id="@+id/buttonStats"
+        android:layout_width="@dimen/button_home_width"
+        android:layout_height="@dimen/button_home_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSleep"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/buttonshape3"
+        android:text="@string/button_statistik"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:onClick="openStats"/>
+
+    <Button
+        android:id="@+id/buttonBluetooth"
+        android:layout_width="@dimen/button_home_width"
+        android:layout_height="@dimen/button_home_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonStats"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/buttonshape3"
+        android:text="@string/button_verbinden"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:onClick="bluetooth"/>
+
+    <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="350sp"
+            android:layout_height="350sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="40sp"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:contentDescription="@null"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

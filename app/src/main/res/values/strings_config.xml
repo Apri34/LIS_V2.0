@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" translatable="false">LIS</string>
+    <string name="home_activity" translatable="false">HomeActivity</string>
+    <string name="Bluetooth_komm_serv" translatable="false">BluetoothKommServ</string>
+
+    <string name="database_name" translatable="false">Lernkarteinen.db</string>
+
+    <string name="make_new_stack_dialog" translatable="false">makeNewStackDialog</string>
+    <string name="make_new_card_dialog" translatable="false">makeNewCardDialog</string>
+
+    <string name="puls" translatable="false">Puls</string>
+    <string name="PD20" translatable="false">PD20</string>
+    <string name="HD20" translatable="false">HD20</string>
+    <string name="movement" translatable="false">Movement</string>
+    <string name="stages" translatable="false">Stages</string>
+
+</resources>

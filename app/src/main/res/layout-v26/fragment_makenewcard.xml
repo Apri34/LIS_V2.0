@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+                                                   android:layout_width="wrap_content"
+                                                   android:layout_height="wrap_content"
+                                                   android:padding="30sp"
+                                                   android:layout_gravity="center"
+>
+
+    <EditText
+            android:id="@+id/etVal1"
+            android:layout_width="180sp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor"
+            android:inputType="text"
+    />
+
+    <TextView
+            android:id="@+id/tvEV1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/etVal1"
+            app:layout_constraintTop_toBottomOf="@+id/etVal1"
+            android:layout_marginTop="5sp"
+            android:text="@string/please_enter_something"
+            android:textColor="@color/red"
+            android:visibility="gone"
+    />
+
+    <EditText
+            android:id="@+id/etVal2"
+            android:layout_width="180sp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/etVal1"
+            app:layout_constraintTop_toBottomOf="@id/etVal1"
+            android:layout_marginTop="20sp"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            tools:ignore="LabelFor"/>
+
+    <TextView
+            android:id="@+id/tvEV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/etVal2"
+            app:layout_constraintTop_toBottomOf="@+id/etVal2"
+            android:layout_marginTop="5sp"
+            android:text="@string/please_enter_something"
+            android:textColor="@color/red"
+            android:visibility="gone"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

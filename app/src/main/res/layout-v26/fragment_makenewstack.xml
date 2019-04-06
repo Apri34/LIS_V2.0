@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   android:orientation="vertical"
+                                                   android:layout_width="wrap_content"
+                                                   android:layout_height="wrap_content"
+                                                   android:padding="30sp"
+                                                   android:layout_gravity="center"
+>
+    <EditText
+            android:id="@+id/etSN"
+            android:layout_width="180sp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:hint="@string/edittext_stapelname"
+            android:inputType="text"
+            android:importantForAutofill="no"
+            />
+
+    <TextView
+            android:id="@+id/tvPEN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/etSN"
+            app:layout_constraintTop_toBottomOf="@+id/etSN"
+            android:layout_marginTop="5sp"
+            android:text="@string/please_enter_name"
+            android:textColor="@color/red"
+            android:visibility="gone"
+    />
+    <Spinner
+            android:id="@+id/spinnerStackTypeMakeStack"
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/tvST"
+            app:layout_constraintTop_toBottomOf="@+id/tvPEN"
+            android:layout_marginTop="10sp"
+    />
+    <TextView
+            android:id="@+id/tvPCT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/spinnerStackTypeMakeStack"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerStackTypeMakeStack"
+            android:layout_marginTop="5sp"
+            android:text="@string/please_choose_type"
+            android:textColor="@color/red"
+            android:visibility="gone"
+    />
+
+    <Spinner
+            android:id="@+id/spinnerLang1"
+            android:layout_width="180sp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/tvST"
+            app:layout_constraintTop_toBottomOf="@id/tvPCT"
+            android:layout_marginTop="10sp"
+            android:layout_marginStart="70sp"
+            android:visibility="gone"
+    />
+
+    <Spinner
+            android:id="@+id/spinnerLang2"
+            android:layout_height="wrap_content"
+            android:layout_width="180sp"
+            app:layout_constraintTop_toBottomOf="@id/spinnerLang1"
+            app:layout_constraintLeft_toLeftOf="@+id/spinnerLang1"
+            android:layout_marginTop="10sp"
+            android:visibility="gone"
+    />
+
+    <TextView
+            android:id="@+id/tvSLNA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/spinnerLang2"
+            app:layout_constraintTop_toBottomOf="@id/spinnerLang2"
+            android:layout_marginTop="5sp"
+            android:text="@string/same_languages_not_allowed"
+            android:textColor="@color/red"
+            android:visibility="gone"
+    />
+
+    <TextView
+            android:id="@+id/tvSL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/spinnerLang2"
+            app:layout_constraintTop_toBottomOf="@id/spinnerLang2"
+            android:layout_marginTop="5sp"
+            android:text="@string/please_select_a_language"
+            android:textColor="@color/red"
+            android:visibility="gone"
+    />
+
+    <TextView
+            android:id="@+id/tvST"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@id/spinnerStackTypeMakeStack"
+            android:text="@string/typ"
+            android:textSize="18sp"
+    />
+
+    <TextView
+            android:id="@+id/tvL1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/tvST"
+            app:layout_constraintTop_toTopOf="@id/spinnerLang1"
+            android:text="@string/_1_sprache"
+            android:textSize="18sp"
+            android:visibility="gone"
+    />
+
+    <TextView
+            android:id="@+id/tvL2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/tvST"
+            app:layout_constraintTop_toTopOf="@id/spinnerLang2"
+            android:text="@string/_2_sprache"
+            android:textSize="18sp"
+            android:visibility="gone"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
