@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" /> <!--TODO check if the app works without that permission -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -24,6 +24,11 @@
         </activity>
         <activity android:name=".ui.activities.HomeActivity"/>
         <activity android:name=".ui.activities.CardsActivity"/>
+        <activity android:name=".ui.activities.SleepActivity"/>
+        <activity android:name=".ui.activities.StatisticsActivity"/>
+        <service android:name=".services.SaveValuesService"/>
+        <service android:name=".services.OutputService"/>
+        <service android:name=".services.SleepstageService"/>
     </application>
 
 </manifest>

@@ -31,4 +31,13 @@ package com.lis.lis
  "Select ..." anzeigen. Sobald man etwas ausgewählt hat, verschienet diese Auswahl.
 
  + Beim Löschen wird ein AlertDialog zum Bestätigen aufgerufen.
+
+ + Die Werte werden sofort beim Empfangen in das File geschrieben, nicht erst in
+ ArrayLists und dann zu Beginn in das File. So werden die Werte sicher
+ gespeichert und gehen bei einem Fehler nicht verloren. Außerdem werden
+ die Files nicht mehr in die Datenbank gespeichert, sondern werden direkt vom Speicher
+ aufgerufen. Das spart eine unnötige Tabelle in der Datenbank und somit
+ Programmieraufwand. Die Werte werden auch nur in ein File im JSON-Format
+ geschrieben. Die Werte werden dann in einem Hintergrundthread abgerufen,
+ dass sich die App nicht aufhängt.
 */

@@ -65,4 +65,14 @@
     <string name="yes">Yes</string>
     <string name="confirm_delete_stack">Delete Stack?</string>
     <string name="error_no_such_stack">Error: no such stack</string>
+    <string name="BT_conn_not_possible">Bluetooth connection not possible</string>
+    <string name="device_found">Device found</string>
+    <string name="device_not_found">Device not found</string>
+    <string name="connecting_bt">Bluetooth connecting</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="pulse">pulse</string>
+    <string name="get_up">Get up</string>
+    <string name="sleep">Sleep</string>
+    <string name="error_fetching_data">Error fetching data</string>
+    <string name="hfv">HFV</string>
 </resources>

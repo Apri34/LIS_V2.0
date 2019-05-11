@@ -72,4 +72,14 @@
     <string name="yes">Ja</string>
     <string name="confirm_delete_stack">Stapel wirklich löschen?</string>
     <string name="error_no_such_stack">Fehler: Stapel nicht vorhanden</string>
+    <string name="device_found">Gerät gefunden</string>
+    <string name="BT_conn_not_possible">Bluetooth Verbindung nicht möglich</string>
+    <string name="device_not_found">Gerät nicht gefunden</string>
+    <string name="connecting_bt">Bluetooth-Verbindung wird hergestellt</string>
+    <string name="please_wait">Bitte warten...</string>
+    <string name="pulse">Puls</string>
+    <string name="get_up">Aufstehen</string>
+    <string name="sleep">Schlafen</string>
+    <string name="error_fetching_data">Fehler beim Laden der Daten</string>
+    <string name="hfv">HFV</string>
 </resources>
