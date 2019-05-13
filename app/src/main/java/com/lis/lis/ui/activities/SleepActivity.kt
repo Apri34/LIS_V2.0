@@ -69,6 +69,11 @@ class SleepActivity: AppCompatActivity() {
         startSleepStageService()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(valueReceiver)

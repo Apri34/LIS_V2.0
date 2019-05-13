@@ -38,6 +38,14 @@ package com.lis.lis
  die Files nicht mehr in die Datenbank gespeichert, sondern werden direkt vom Speicher
  aufgerufen. Das spart eine unnötige Tabelle in der Datenbank und somit
  Programmieraufwand. Die Werte werden auch nur in ein File im JSON-Format
- geschrieben. Die Werte werden dann in einem Hintergrundthread abgerufen,
- dass sich die App nicht aufhängt.
+ geschrieben.
+
+ + Beim Laden der Daten aus den Files wird ein Dialogfenster geöffnet, welches den
+ Ladevorgang anzeigt. Außerdem findet das Laden im Hintergrund statt. Das führt zu
+ einer besseren User experience, da der Bildschir nicht mehr hängt.
+
+ + Man kann nun Files wieder löschen, was es viel übersichtlicher macht.
+
+ + Beim Verbinden wurde auch die User experience erhöht, da ein Dialogfenster
+ geöffnet wird, welches die Suche nach Geräten anzeigt.
 */

@@ -9,21 +9,18 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.lis.lis.R
 import com.lis.lis.services.BluetoothCommunicationService
+import com.lis.lis.ui.fragments.BackPressedFragment
+import com.lis.lis.ui.fragments.ConnectFragment
 import com.lis.lis.ui.fragments.DisconnectBTFragment
-import java.lang.Exception
+import com.lis.lis.ui.fragments.SearchingDevicesFragment
 import java.util.*
 
-
-private const val ENABLE_BT = 1
-private const val BLUETOOTH_MODULE = "98:D3:32:31:91:8F"
-
-class HomeActivity: AppCompatActivity(), DisconnectBTFragment.BTDisconnectListener {
+class HomeActivity: AppCompatActivity(), DisconnectBTFragment.BTDisconnectListener, SearchingDevicesFragment.ICancelDiscovery, ConnectFragment.IStartDiscovery, BackPressedFragment.ILeave {
 
     private val mUUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb")
     private var myBluetoothAdapter: BluetoothAdapter? = null
@@ -33,6 +30,7 @@ class HomeActivity: AppCompatActivity(), DisconnectBTFragment.BTDisconnectListen
     private lateinit var bluetoothCommunicationService: BluetoothCommunicationService
     private var deviceConnected = false
     private var device: BluetoothDevice? = null
+    private lateinit var searchingDevicesFragment: SearchingDevicesFragment
 
     inner class DeviceFoundReceiver: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -40,7 +38,8 @@ class HomeActivity: AppCompatActivity(), DisconnectBTFragment.BTDisconnectListen
 
             if(action != null && action == BluetoothDevice.ACTION_FOUND) {
                 device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-                if(device!!.address == BLUETOOTH_MODULE) {
+                if(device!!.address == "98:D3:32:31:91:8F") {
+                    searchingDevicesFragment.dismiss()
                     pickDevice()
                 }
             }
@@ -66,17 +65,14 @@ class HomeActivity: AppCompatActivity(), DisconnectBTFragment.BTDisconnectListen
     inner class BTStateChangedReceiver: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val action = intent!!.action
-            if(action == BluetoothAdapter.ACTION_STATE_CHANGED && myBluetoothAdapter!!.state== BluetoothAdapter.STATE_OFF)
+            if(action == BluetoothAdapter.ACTION_STATE_CHANGED && myBluetoothAdapter!!.state == BluetoothAdapter.STATE_OFF)
                 device = null
-        }
-    }
 
-    private val handler = Handler {
-        if(!deviceConnected) {
-            Toast.makeText(this, getString(R.string.device_not_found), Toast.LENGTH_LONG).show()
-            myBluetoothAdapter!!.cancelDiscovery()
+            if(action == BluetoothAdapter.ACTION_STATE_CHANGED && myBluetoothAdapter!!.state == BluetoothAdapter.STATE_ON) {
+                val dialog = ConnectFragment()
+                dialog.show(supportFragmentManager, "ConnectFragment")
+            }
         }
-        true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,13 +91,45 @@ class HomeActivity: AppCompatActivity(), DisconnectBTFragment.BTDisconnectListen
         super.onDestroy()
         try {
             unregisterReceiver(brDeviceFound)
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         try {
             unregisterReceiver(brBTStateChanged)
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         try {
             unregisterReceiver(brConnChanged)
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onBackPressed() {
+        val dialog = BackPressedFragment()
+        dialog.show(supportFragmentManager, "BackPressedDialog")
+    }
+
+    override fun cancelDiscovery() {
+        myBluetoothAdapter!!.cancelDiscovery()
+    }
+
+    override fun startDiscovery() {
+        discover()
+    }
+
+    override fun disconnectBTDevice() {
+        if(deviceConnected) {
+            device = null
+            myBluetoothAdapter!!.disable()
+            myBluetoothAdapter!!.enable()
+            deviceConnected = false
+        }
+    }
+
+    override fun leave() {
+        super.onBackPressed()
     }
 
     fun openCards(@Suppress("unused_parameter") v: View) {
@@ -133,30 +161,9 @@ class HomeActivity: AppCompatActivity(), DisconnectBTFragment.BTDisconnectListen
 
             if (!myBluetoothAdapter!!.isEnabled) {
                 val enableBTIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-                startActivityForResult(enableBTIntent, ENABLE_BT)
-            }
-
-            //TODO make dialog: Searching for devices with cancel button
-
-            val timer = Runnable {
-                try {
-                    Thread.sleep(7000)
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
-                }
-                handler.sendEmptyMessage(0)
-            }
-            val threadTmr = Thread(timer)
-            threadTmr.start()
-
-            if (myBluetoothAdapter!!.isDiscovering) {
-                Toast.makeText(this, "Sucht nach Geräten", Toast.LENGTH_LONG).show()
+                startActivityForResult(enableBTIntent, 1)
             } else {
-                checkBTPermissions()
-                myBluetoothAdapter!!.startDiscovery()
-
-                val discoverDevicesIntent = IntentFilter(BluetoothDevice.ACTION_FOUND)
-                registerReceiver(brDeviceFound, discoverDevicesIntent)
+                discover()
             }
         } else {
             val dialog = DisconnectBTFragment()
@@ -198,11 +205,14 @@ class HomeActivity: AppCompatActivity(), DisconnectBTFragment.BTDisconnectListen
         Toast.makeText(this, getString(R.string.device_found), Toast.LENGTH_LONG).show()
     }
 
-    override fun disconnectBTDevice() {
-        if(deviceConnected) {
-            device = null
-            myBluetoothAdapter!!.disable()
-            deviceConnected = false
-        }
+    private fun discover() {
+        checkBTPermissions()
+        myBluetoothAdapter!!.startDiscovery()
+        searchingDevicesFragment = SearchingDevicesFragment()
+        searchingDevicesFragment.show(supportFragmentManager, "SearchingDevicesFragment")
+
+        val discoverDevicesIntent = IntentFilter(BluetoothDevice.ACTION_FOUND)
+        registerReceiver(brDeviceFound, discoverDevicesIntent)
     }
 }
+

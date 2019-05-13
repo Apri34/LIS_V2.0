@@ -7,13 +7,9 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.IBinder
 import android.util.Log
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.lis.lis.constants.SEND_SAVEVALUES_BROADCAST_ACTION
 import org.json.JSONObject
 import java.io.*
-import java.lang.Exception
-import java.sql.Date
-import java.text.DateFormat
 import java.util.*
 
 class SaveValuesService: Service() {
@@ -22,7 +18,6 @@ class SaveValuesService: Service() {
     private val intentFilter = IntentFilter(SEND_SAVEVALUES_BROADCAST_ACTION)
     private var outputStream: OutputStream? = null
     private var count = 1
-    private val calendar = Calendar.getInstance()
 
     private inner class ValueReceiver: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -30,25 +25,28 @@ class SaveValuesService: Service() {
             //TODO Nach der Implementierung von SleepStageService schauen, ob die Werte noch passen (ob es die richtigen sind und die richtigen Datentypen)
             val extras = intent!!.extras!!
             val pulse = extras.getInt("pulse")
-            val time = calendar.timeInMillis
-            val pulseDiameter = extras.getInt("pulseAvg")
+            val time = Calendar.getInstance().timeInMillis
+            val pulseAvg = extras.getInt("pulseAvg")
             val hfvar = extras.getInt("hfvar")
-            val hfvarDiameter = extras.getInt("hfvarAvg")
+            val hfvarAvg = extras.getInt("hfvarAvg")
             val sleepStage = extras.getInt("sleepStage")
             val isMovingCount = extras.getInt("isMovingCount")
 
             val jsonString = "\"$count\":{" +
                     "\"time\":$time," +
                     "\"pulse\":$pulse," +
-                    "\"pulseDiameter\":$pulseDiameter," +
+                    "\"pulseAvg\":$pulseAvg," +
                     "\"hfvar\":$hfvar," +
-                    "\"hfvarDiameter\":$hfvarDiameter," +
+                    "\"hfvarAvg\":$hfvarAvg," +
                     "\"sleepStage\":$sleepStage," +
                     "\"isMovingCount\":$isMovingCount" +
-                    "},"
+                    "}"
 
             if(outputStream != null) {
                 try {
+                    if(count != 1) {
+                        outputStream!!.write(",".toByteArray())
+                    }
                     outputStream!!.write(jsonString.toByteArray())
                     count++
                     Log.i(this.toString(), "Values saved: Pulse = $pulse")
@@ -101,13 +99,13 @@ class SaveValuesService: Service() {
             }
         }
 
-        val filename = String.format("json_values_$id")
+        val filename = "json_values_$id"
         try {
             outputStream = openFileOutput(filename, Context.MODE_PRIVATE)
-            outputStream!!.write(("{\"startTime\":" + calendar.timeInMillis.toString() + "," +
+            outputStream!!.write(("{\"startTime\":" + Calendar.getInstance().timeInMillis.toString() + "," +
                     "\"id\":$id"+
                     "}\n").toByteArray())
-            outputStream!!.write("\"values\":{".toByteArray())
+            outputStream!!.write("{".toByteArray())
             Log.i(this.toString(), "File created: id = $id")
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
@@ -124,7 +122,7 @@ class SaveValuesService: Service() {
 
         if(outputStream != null) {
             try {
-                outputStream!!.write("}}".toByteArray())
+                outputStream!!.write("}".toByteArray())
             } catch (e: Exception) {
                 e.printStackTrace()
             }

@@ -76,7 +76,7 @@
     <string name="device_found">Gerät gefunden</string>
     <string name="device_not_found">Gerät nicht gefunden</string>
     <string name="connecting_bt">Bluetooth-Verbindung wird hergestellt</string>
-    <string name="please_wait">Bitte warten...</string>
+    <string name="please_wait">Bitte warten…</string>
     <string name="pulse">Puls</string>
     <string name="get_up">Aufstehen</string>
     <string name="sleep">Schlafen</string>
@@ -85,4 +85,19 @@
     <string name="device_must_be_connected">Gerät muss verbunden sein</string>
     <string name="bt_device_already_connected_disconnect">Bluetooth-Gerät ist bereits verbunden. Verbingung trennen?
     </string>
+    <string name="searching_for_device">Gerät wird gesucht</string>
+    <string name="fetching_data">Daten werden geladen</string>
+    <string name="searching_device">Gerät wird gesucht</string>
+    <string name="bluetooth_enabled_start_discovery">Bluetooth eingeschalten. Suche nach Geräten starten?</string>
+    <string name="leave">Wirklich verlassen?</string>
+    <string name="delete_files">Files Löschen</string>
+    <string name="delete_files_question">Files Löschen?</string>
+    <string name="select_file">File auswählen</string>
+    <string name="error_deleting_files">Fehler beim Löschen</string>
+    <string name="select_type">Typ auswählen</string>
+    <string name="time">Zeit</string>
+    <string name="pulse_avg">Puls Avg</string>
+    <string name="hfvar">HFVar</string>
+    <string name="hfvar_avg">HFVar Avg</string>
+    <string name="sleepstage">Schlafphase</string>
 </resources>
