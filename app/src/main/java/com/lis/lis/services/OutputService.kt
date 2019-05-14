@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.IBinder
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.lis.lis.R
 import com.lis.lis.constants.*
 import com.lis.lis.database.AppDatabase

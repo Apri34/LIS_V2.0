@@ -5,11 +5,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.media.audiofx.DynamicsProcessing
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.lis.lis.constants.*
 import com.lis.lis.enums.Sleepstage
 
@@ -34,25 +32,27 @@ class SleepstageService: Service() {
 
             detectSleepStage()
 
+
             //TODO put real values
+            sendValues(pulse.toInt(), 0, hfVar.toInt(), 0, 0, 0)
+        }
+
+        fun sendValues(pulse: Int, pulseAvg: Int, hfVar: Int, hfVarAvg: Int, sleepStage: Int, isMovingCount: Int) {
             val ext = Bundle()
-            ext.putInt("pulse", pulse.toInt())
-            ext.putInt("pulseAvg", 0)
-            ext.putInt("hfvar", hfVar.toInt())
-            ext.putInt("hfvarAvg", 0)
-            ext.putInt("sleepStage", 0)
-            ext.putInt("isMovingCount", 0)
+            ext.putInt("pulse", pulse)
+            ext.putInt("pulseAvg", pulseAvg)
+            ext.putInt("hfvar", hfVar)
+            ext.putInt("hfvarAvg", hfVarAvg)
+            ext.putInt("sleepStage", sleepStage)
+            ext.putInt("isMovingCount", isMovingCount)
             broadcastIntent.putExtras(ext)
             sendBroadcast(broadcastIntent)
         }
-
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
-        val intentFilter = IntentFilter(SEND_VALUES_BROADCAST_ACTION)
-        registerReceiver(valueReceiver, intentFilter)
-        
+        val filter = IntentFilter(SEND_VALUES_BROADCAST_ACTION)
+        registerReceiver(valueReceiver, filter)
         return START_STICKY
     }
 

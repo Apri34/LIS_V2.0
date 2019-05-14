@@ -1,6 +1,5 @@
 package com.lis.lis.services
 
-import android.app.ProgressDialog
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothServerSocket
@@ -9,9 +8,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.fragment.app.FragmentManager
 import com.lis.lis.R
 import com.lis.lis.constants.*
+import com.lis.lis.ui.fragments.ConnectProgressFragment
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.*
@@ -28,11 +28,13 @@ class BluetoothCommunicationService() {
     private var acceptThread: AcceptThread? = null
     private var connectedThread: ConnectedThread? = null
     private val mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
-    @Suppress("deprecation") private lateinit var progressDialog: ProgressDialog
+    private lateinit var supportFragmentManager: FragmentManager
+    private lateinit var progressDialog: ConnectProgressFragment
 
-    constructor(context: Context, resources: Resources) : this() {
+    constructor(context: Context, resources: Resources, supportFragmentManager: FragmentManager) : this() {
         this.context = context
         this.resources = resources
+        this.supportFragmentManager = supportFragmentManager
         start()
     }
 
@@ -55,7 +57,8 @@ class BluetoothCommunicationService() {
 
     @Suppress("deprecation")
     fun startClient(device: BluetoothDevice, deviceUUID: UUID) {
-        progressDialog = ProgressDialog.show(context, resources.getString(R.string.connecting_bt), resources.getString(R.string.please_wait))
+        progressDialog = ConnectProgressFragment()
+        progressDialog.show(supportFragmentManager, "ConnectProgressDialog")
         this.device = device
         this.deviceUUID = deviceUUID
         connectThread = ConnectThread()

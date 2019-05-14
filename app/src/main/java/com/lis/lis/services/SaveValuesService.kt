@@ -17,7 +17,6 @@ class SaveValuesService: Service() {
     private val valueReceiver = ValueReceiver()
     private val intentFilter = IntentFilter(SEND_SAVEVALUES_BROADCAST_ACTION)
     private var outputStream: OutputStream? = null
-    private var count = 1
 
     private inner class ValueReceiver: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -32,7 +31,7 @@ class SaveValuesService: Service() {
             val sleepStage = extras.getInt("sleepStage")
             val isMovingCount = extras.getInt("isMovingCount")
 
-            val jsonString = "\"$count\":{" +
+            val jsonString = "{" +
                     "\"time\":$time," +
                     "\"pulse\":$pulse," +
                     "\"pulseAvg\":$pulseAvg," +
@@ -40,15 +39,11 @@ class SaveValuesService: Service() {
                     "\"hfvarAvg\":$hfvarAvg," +
                     "\"sleepStage\":$sleepStage," +
                     "\"isMovingCount\":$isMovingCount" +
-                    "}"
+                    "}\n"
 
             if(outputStream != null) {
                 try {
-                    if(count != 1) {
-                        outputStream!!.write(",".toByteArray())
-                    }
                     outputStream!!.write(jsonString.toByteArray())
-                    count++
                     Log.i(this.toString(), "Values saved: Pulse = $pulse")
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -105,7 +100,6 @@ class SaveValuesService: Service() {
             outputStream!!.write(("{\"startTime\":" + Calendar.getInstance().timeInMillis.toString() + "," +
                     "\"id\":$id"+
                     "}\n").toByteArray())
-            outputStream!!.write("{".toByteArray())
             Log.i(this.toString(), "File created: id = $id")
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
@@ -119,20 +113,6 @@ class SaveValuesService: Service() {
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(valueReceiver)
-
-        if(outputStream != null) {
-            try {
-                outputStream!!.write("}".toByteArray())
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            try {
-                outputStream!!.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
-        count = 1
     }
 
     override fun onBind(p0: Intent?): IBinder? {

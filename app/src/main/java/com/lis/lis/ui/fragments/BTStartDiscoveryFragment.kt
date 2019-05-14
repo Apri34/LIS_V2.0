@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.lis.lis.R
 import java.lang.ClassCastException
 
-class ConnectFragment: DialogFragment() {
+class BTStartDiscoveryFragment: DialogFragment() {
 
     private lateinit var listener: IStartDiscovery
 

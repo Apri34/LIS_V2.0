@@ -16,16 +16,17 @@ import com.jjoe64.graphview.series.LineGraphSeries
 import com.lis.lis.R
 import com.lis.lis.adapters.HintAdapter
 import com.lis.lis.ui.fragments.DeleteFilesFragment
-import com.lis.lis.ui.fragments.FetchingDataFragment
+import com.lis.lis.ui.fragments.FetchingDataProgressFragment
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.*
+import java.lang.Exception
 import java.lang.ref.WeakReference
 import java.sql.Date
 import java.text.DateFormat
 import java.util.*
 
-class StatisticsActivity: AppCompatActivity(), FetchingDataFragment.ICancelFetchingData, DeleteFilesFragment.IDeleteSelectedFiles {
+class StatisticsActivity: AppCompatActivity(), FetchingDataProgressFragment.ICancelFetchingData, DeleteFilesFragment.IDeleteSelectedFiles {
 
     private lateinit var graphView: GraphView
     private lateinit var spinnerDataset: Spinner
@@ -163,7 +164,7 @@ class StatisticsActivity: AppCompatActivity(), FetchingDataFragment.ICancelFetch
         return adapter
     }
 
-    private fun fetchData(spinnerItem: String): Boolean {
+    private fun fetchData(spinnerItem: String) {
         val id = fileMap.keyAt(fileMap.indexOfValue(spinnerItem))
 
         val filenameFilter = FilenameFilter (
@@ -172,10 +173,10 @@ class StatisticsActivity: AppCompatActivity(), FetchingDataFragment.ICancelFetch
                 return lowerCaseName.contains("json_values_$id")
         })
         val files = filesDir.listFiles(filenameFilter)
-        if(files.size != 1) return false
+        if(files.size != 1) return
 
         task = FetchData(this)
-        return task.execute(files[0].name).get()
+        task.execute(files[0].name)
     }
 
     private fun getNewGraph() {
@@ -253,22 +254,54 @@ class StatisticsActivity: AppCompatActivity(), FetchingDataFragment.ICancelFetch
     private class FetchData(context: StatisticsActivity): AsyncTask<String, Void, Boolean>() {
 
         private val weakReference = WeakReference<StatisticsActivity>(context)
-        private val dialog = FetchingDataFragment()
+        private val dialog = FetchingDataProgressFragment()
 
         override fun onPreExecute() {
-            super.onPreExecute()
+            weakReference.get()!!.pulseArrayList.clear()
+            weakReference.get()!!.hfvarArrayList.clear()
+            weakReference.get()!!.hfvarAvgArrayList.clear()
+            weakReference.get()!!.movingArrayList.clear()
+            weakReference.get()!!.pulseAvgArrayList.clear()
+            weakReference.get()!!.stageArrayList.clear()
+            weakReference.get()!!.timeArrayList.clear()
             dialog.show(weakReference.get()!!.supportFragmentManager, "FetchingDataDialog")
+            super.onPreExecute()
         }
 
         override fun doInBackground(vararg fileName: String?): Boolean {
             var inputStream: FileInputStream? = null
-            var jsonValues = ""
+            var jsonValues: String? = null
             try {
                 inputStream = weakReference.get()!!.openFileInput(fileName[0])
                 val reader = InputStreamReader(inputStream)
                 val bufferedReader = BufferedReader(reader)
                 bufferedReader.readLine()
-                jsonValues = bufferedReader.readLine()
+                while(!isCancelled) {
+                    try {
+                        jsonValues = bufferedReader.readLine()
+                    } catch (e: IllegalStateException) {
+                        e.printStackTrace()
+                        break
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    if(jsonValues != null) {
+                        try {
+                            val obj = JSONObject(jsonValues)
+                            weakReference.get()!!.timeArrayList.add(obj.getLong("time"))
+                            weakReference.get()!!.pulseArrayList.add(obj.getInt("pulse"))
+                            weakReference.get()!!.pulseAvgArrayList.add(obj.getInt("pulseAvg"))
+                            weakReference.get()!!.hfvarArrayList.add(obj.getInt("hfvar"))
+                            weakReference.get()!!.hfvarAvgArrayList.add(obj.getInt("hfvarAvg"))
+                            weakReference.get()!!.stageArrayList.add(obj.getInt("sleepStage"))
+                            weakReference.get()!!.movingArrayList.add(obj.getInt("isMovingCount"))
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                    } else {
+                        break
+                    }
+                }
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
             } catch (e: IOException) {
@@ -283,31 +316,7 @@ class StatisticsActivity: AppCompatActivity(), FetchingDataFragment.ICancelFetch
                 }
             }
 
-            if(jsonValues != "") {
-                val obj = JSONObject(jsonValues)
-                var count = 1
-                while(weakReference.get() != null && !weakReference.get()!!.isFinishing && !isCancelled) {
-                    try {
-                        val values = obj.getJSONObject(count.toString())
-                        weakReference.get()!!.timeArrayList.add(values.getLong("time"))
-                        weakReference.get()!!.pulseArrayList.add(values.getInt("pulse"))
-                        weakReference.get()!!.pulseAvgArrayList.add(values.getInt("pulseAvg"))
-                        weakReference.get()!!.hfvarArrayList.add(values.getInt("hfvar"))
-                        weakReference.get()!!.hfvarAvgArrayList.add(values.getInt("hfvarAvg"))
-                        weakReference.get()!!.stageArrayList.add(values.getInt("sleepStage"))
-                        weakReference.get()!!.movingArrayList.add(values.getInt("isMovingCount"))
-                    } catch(e: JSONException) {
-                        e.printStackTrace()
-                        break
-                    }
-                    count++
-                }
-                return true
-            }
-
-            else {
-                return false
-            }
+            return weakReference.get()!!.timeArrayList.size != 0
         }
 
         override fun onPostExecute(result: Boolean?) {

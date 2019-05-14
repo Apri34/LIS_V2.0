@@ -11,7 +11,6 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.lis.lis.R
 import com.lis.lis.constants.*
 import com.lis.lis.database.AppDatabase
@@ -67,11 +66,6 @@ class SleepActivity: AppCompatActivity() {
         registerReceiver(valueReceiver, filter)
 
         startSleepStageService()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
     }
 
     override fun onDestroy() {

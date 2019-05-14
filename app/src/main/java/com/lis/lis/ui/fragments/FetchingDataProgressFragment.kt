@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.lis.lis.R
 import java.lang.ClassCastException
 
-class FetchingDataFragment: DialogFragment() {
+class FetchingDataProgressFragment: DialogFragment() {
 
     private lateinit var listener: ICancelFetchingData
 
@@ -17,7 +17,7 @@ class FetchingDataFragment: DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(context)
         val inflater = activity!!.layoutInflater
-        val v = inflater.inflate(R.layout.fragment_fetching_data, null)
+        val v = inflater.inflate(R.layout.progressdialog_fetching_data, null)
         builder.setView(v)
         builder.setNegativeButton(android.R.string.cancel) { _, _->
             listener.cancelFetchingData()

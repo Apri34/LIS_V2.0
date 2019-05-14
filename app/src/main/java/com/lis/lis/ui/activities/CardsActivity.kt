@@ -196,7 +196,7 @@ class CardsActivity: AppCompatActivity(), MakeNewStackFragment.IMakeNewStack, Ma
             bundle.putString("col2", stack.column2)
             makeNewCardFragment.arguments = bundle
             makeNewCardFragment.setOnCardMadeListener(this)
-            makeNewCardFragment.show(supportFragmentManager, getString(R.string.make_new_card_dialog))
+            makeNewCardFragment.show(supportFragmentManager, "MakeNewCardDialog")
         } else
             Toast.makeText(this, getString(R.string.error_no_such_stack), Toast.LENGTH_LONG).show()
     }

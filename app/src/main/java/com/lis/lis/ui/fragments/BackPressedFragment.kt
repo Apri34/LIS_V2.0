@@ -18,7 +18,7 @@ class BackPressedFragment: DialogFragment() {
             .setNegativeButton(android.R.string.cancel) {_,_->
 
             }
-            .setPositiveButton(android.R.string.yes) {_,_->
+            .setPositiveButton(R.string.yes) {_,_->
                 listener.leave()
             }
         return builder.create()

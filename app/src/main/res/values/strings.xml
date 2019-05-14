@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Toast Masseges -->
-    <string name="touch_again_to_exit">Erneut drücken, um zu beenden</string>
-    <string name="no_stack">Kein Stapel vorhanden</string>
-    <string name="delete_successful">Erfolgreich gelöscht</string>
-    <string name="delete_error">Fehler beim Löschen</string>
-    <string name="error_occurred">Es ist ein Fehler aufgetreten</string>
     <string name="choose_row">Bitte eine Zeile auswählen</string>
-    <string name="output_stopped">Ausgabe gestoppt</string>
-    <string name="save_successful">Werte erfolgreich gespeichert</string>
-    <string name="wait_till_output_stopped">Warten, bis die Ausgabe beendet ist</string>
-    <string name="output_paused">Ausgabe pausiert</string>
-    <string name="output_resumed">Ausgabe fortgesetzt</string>
-    <string name="output_must_be_started">Ausgabe muss zuerst fortgesetzt werden</string>
-    <string name="add_successful">Erfolgreich hinzugefügt</string>
-    <string name="card_not_added_no_input">Kartei nicht hinzugefügt. Bitte etwas eingeben</string>
-    <string name="stack_created">Stapel erfolgreich erstellt</string>
-    <string name="stack_not_created_same_languages">Stapel nicht erstellt. Zwei verschiedene Sprachen auswählen</string>
-    <string name="stack_not_created_no_special_character">Stapel nicht erstellt. Keine Sonderzeichen erlaubt</string>
-    <string name="stack_not_created_no_stack_name">Stapel nicht erstellt. Bitte einen Stapelnamen eingeben</string>
-
 
     <string name="new_card">Neue Kartei</string>
     <string name="cancel">Beenden</string>
@@ -27,29 +8,19 @@
     <string name="new_stack">Neuer Stapel</string>
     <string name="welcome">Willkommen bei</string>
     <string name="lis">LIS</string>
-    <string name="text_puls">Puls</string>
     <string name="edittext_stapelname">Stapelname</string>
     <string name="typ">Typ:</string>
     <string name="_1_sprache">1. Sprache:</string>
     <string name="_2_sprache">2. Sprache:</string>
     <string name="stapel">Stapel:</string>
-
-
-
-    <!-- Widgets -->
     <string name="button_lernkarteien">Lernkarteien</string>
     <string name="buttonschlafen">Schlafen</string>
     <string name="button_statistik">Statistik</string>
     <string name="button_verbinden">Verbinden</string>
-    <string name="button_karte_loeschen">Karte Löschen</string>
+    <string name="button_karte_loeschen">Kartei Löschen</string>
     <string name="button_stapel_loeschen">Stapel Löschen</string>
     <string name="button_neuer_stapel">Neuer Stapel</string>
     <string name="button_neue_kartei">Neue Kartei</string>
-    <string name="button_schlafen">Schlafen</string>
-    <string name="button_aufstehen">Aufstehen</string>
-    <string name="button_schlafphase">Schlafphase</string>
-    <string name="graphview_time">Zeit</string>
-    <string name="graphview_puls">Puls</string>
     <string name="table_row_chose">%1s - %2s ausgewählt</string>
     <string name="spinner_vocables">Vokabel</string>
     <string name="spinner_question">Fragen</string>
@@ -74,18 +45,13 @@
     <string name="error_no_such_stack">Fehler: Stapel nicht vorhanden</string>
     <string name="BT_conn_not_possible">Bluetooth Verbindung nicht möglich</string>
     <string name="device_found">Gerät gefunden</string>
-    <string name="device_not_found">Gerät nicht gefunden</string>
-    <string name="connecting_bt">Bluetooth-Verbindung wird hergestellt</string>
-    <string name="please_wait">Bitte warten…</string>
     <string name="pulse">Puls</string>
     <string name="get_up">Aufstehen</string>
     <string name="sleep">Schlafen</string>
     <string name="error_fetching_data">Fehler beim Laden der Daten</string>
     <string name="hfv">HFV</string>
     <string name="device_must_be_connected">Gerät muss verbunden sein</string>
-    <string name="bt_device_already_connected_disconnect">Bluetooth-Gerät ist bereits verbunden. Verbingung trennen?
-    </string>
-    <string name="searching_for_device">Gerät wird gesucht</string>
+    <string name="bt_device_already_connected_disconnect">Bluetooth-Gerät ist bereits verbunden. Verbingung trennen?</string>
     <string name="fetching_data">Daten werden geladen</string>
     <string name="searching_device">Gerät wird gesucht</string>
     <string name="bluetooth_enabled_start_discovery">Bluetooth eingeschalten. Suche nach Geräten starten?</string>
@@ -100,4 +66,6 @@
     <string name="hfvar">HFVar</string>
     <string name="hfvar_avg">HFVar Avg</string>
     <string name="sleepstage">Schlafphase</string>
+    <string name="movement">Bewegung</string>
+    <string name="connecting_bt_device">Bluetooth-Verbindung wird hergestellt</string>
 </resources>

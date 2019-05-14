@@ -15,12 +15,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.lis.lis.R
 import com.lis.lis.services.BluetoothCommunicationService
 import com.lis.lis.ui.fragments.BackPressedFragment
-import com.lis.lis.ui.fragments.ConnectFragment
+import com.lis.lis.ui.fragments.BTStartDiscoveryFragment
 import com.lis.lis.ui.fragments.DisconnectBTFragment
-import com.lis.lis.ui.fragments.SearchingDevicesFragment
+import com.lis.lis.ui.fragments.SearchingDevicesProgressFragment
 import java.util.*
 
-class HomeActivity: AppCompatActivity(), DisconnectBTFragment.BTDisconnectListener, SearchingDevicesFragment.ICancelDiscovery, ConnectFragment.IStartDiscovery, BackPressedFragment.ILeave {
+class HomeActivity: AppCompatActivity(), DisconnectBTFragment.BTDisconnectListener, SearchingDevicesProgressFragment.ICancelDiscovery, BTStartDiscoveryFragment.IStartDiscovery, BackPressedFragment.ILeave {
 
     private val mUUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb")
     private var myBluetoothAdapter: BluetoothAdapter? = null
@@ -30,7 +30,7 @@ class HomeActivity: AppCompatActivity(), DisconnectBTFragment.BTDisconnectListen
     private lateinit var bluetoothCommunicationService: BluetoothCommunicationService
     private var deviceConnected = false
     private var device: BluetoothDevice? = null
-    private lateinit var searchingDevicesFragment: SearchingDevicesFragment
+    private lateinit var searchingDevicesFragment: SearchingDevicesProgressFragment
 
     inner class DeviceFoundReceiver: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -69,8 +69,8 @@ class HomeActivity: AppCompatActivity(), DisconnectBTFragment.BTDisconnectListen
                 device = null
 
             if(action == BluetoothAdapter.ACTION_STATE_CHANGED && myBluetoothAdapter!!.state == BluetoothAdapter.STATE_ON) {
-                val dialog = ConnectFragment()
-                dialog.show(supportFragmentManager, "ConnectFragment")
+                val dialog = BTStartDiscoveryFragment()
+                dialog.show(supportFragmentManager, "BTStartDiscoveryFragment")
             }
         }
     }
@@ -197,7 +197,7 @@ class HomeActivity: AppCompatActivity(), DisconnectBTFragment.BTDisconnectListen
 
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
             device!!.createBond()
-            bluetoothCommunicationService = BluetoothCommunicationService(this, resources)
+            bluetoothCommunicationService = BluetoothCommunicationService(this, resources, supportFragmentManager)
             bluetoothCommunicationService.startClient(device!!, mUUID)
         }
 
@@ -208,8 +208,8 @@ class HomeActivity: AppCompatActivity(), DisconnectBTFragment.BTDisconnectListen
     private fun discover() {
         checkBTPermissions()
         myBluetoothAdapter!!.startDiscovery()
-        searchingDevicesFragment = SearchingDevicesFragment()
-        searchingDevicesFragment.show(supportFragmentManager, "SearchingDevicesFragment")
+        searchingDevicesFragment = SearchingDevicesProgressFragment()
+        searchingDevicesFragment.show(supportFragmentManager, "SearchingDevicesProgressFragment")
 
         val discoverDevicesIntent = IntentFilter(BluetoothDevice.ACTION_FOUND)
         registerReceiver(brDeviceFound, discoverDevicesIntent)
