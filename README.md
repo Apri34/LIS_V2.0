@@ -1,5 +1,6 @@
 # LIS_V2.0
 This is my first Android application. I developed this application due to my diploma project in school. The idea was to track the sleep stages and play a set of vocabulary when a certain sleep stage is reached to improve learning. With an external device, the parameters were measured and sent to the application via Bluetooth. Then, on the application, those values were processed, saved and shown in various graphs. The user could make their own learning cards, which would then get playen during the night. What did not work unfortunately was the detection of the sleep stages. But every other part of the application works.
+Note that this was the first application I have ever developed, so the code is not perfect.
 
 ## Getting Started
 This project uses the Gradle build system. To build this project, use the gradlew build command or use "Import Project" in Android Studio.
