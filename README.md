@@ -34,6 +34,7 @@ This project uses the Gradle build system. To build this project, use the gradle
 * How to use Bluetooth in an Android application
 * I learned to code Kotlin
 * How to use RecyclerViews
+* **I gained a passion for App Development**
 
 ## Author
 Andreas Pribitzer
