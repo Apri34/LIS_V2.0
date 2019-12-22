@@ -6,11 +6,11 @@ Note that this was the first application I have ever developed, so the code is n
 This project uses the Gradle build system. To build this project, use the gradlew build command or use "Import Project" in Android Studio.
 
 ## Screenshots
-![](images/Screenshot1.jpg)
-![](images/Screenshot2.jpg)
-![](images/Screenshot3.jpg)
-![](images/Screenshot4.jpg)
-![](images/Screenshot5.jpg)
+![](images/Screenshot1.png)
+![](images/Screenshot2.png)
+![](images/Screenshot3.png)
+![](images/Screenshot4.png)
+![](images/Screenshot5.png)
 
 ## Libraries Used
 * Foundation
