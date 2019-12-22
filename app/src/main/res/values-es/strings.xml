@@ -73,4 +73,6 @@
     <string name="bt_device_already_connected_disconnect">Bluetooth-Gerät ist bereits verbunden. Verbingung trennen?</string>
     <string name="movement">Bewegung</string>
     <string name="connecting_bt_device">Bluetooth-Verbindung wird hergestellt</string>
+    <string name="please_select_stack">Bitte einen Stapel auswählen</string>
+    <string name="please_make_stack">Bitte einen Stapel erstellen</string>
 </resources>

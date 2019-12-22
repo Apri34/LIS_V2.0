@@ -150,7 +150,6 @@ class StatisticsActivity: AppCompatActivity(), FetchingDataProgressFragment.ICan
 
     private fun getDataTypeAdapter(): SpinnerAdapter {
         val types = ArrayList<String>()
-        //TODO add right types after implementation of SleepstageService
         types.add(getString(R.string.pulse))
         types.add(getString(R.string.pulse_avg))
         types.add(getString(R.string.hfvar))
@@ -197,38 +196,44 @@ class StatisticsActivity: AppCompatActivity(), FetchingDataProgressFragment.ICan
             }
             graphView.gridLabelRenderer.labelFormatter = defaultLabelFormatter
             graphView.gridLabelRenderer.horizontalAxisTitle = getString(R.string.time)
-            graphView.viewport.isYAxisBoundsManual = true
 
-            when(spinnerDataType.selectedItem.toString()) {
-                getString(R.string.pulse) -> {
-                    graphView.viewport.setMinY(30.0)
-                    graphView.viewport.setMaxY(120.0)
+            graphView.viewport.apply {
+
+                isYAxisBoundsManual = true
+
+                when(spinnerDataType.selectedItem.toString()) {
+                    getString(R.string.pulse) -> {
+                        setMinY(30.0)
+                        setMaxY(120.0)
+                    }
+                    getString(R.string.pulse_avg) -> {
+                        setMinY(30.0)
+                        setMaxY(120.0)
+                    }
+                    getString(R.string.hfvar) -> {
+                        setMinY(0.0)
+                        setMaxY(20.0)
+                    }
+                    getString(R.string.hfvar_avg) -> {
+                        setMinY(0.0)
+                        setMaxY(25.0)
+                    }
+                    getString(R.string.sleepstage) -> {
+                        setMinY(0.0)
+                        setMaxY(4.0)
+                    }
+                    getString(R.string.movement) -> {
+                        setMinY(0.0)
+                        setMaxY(25.0)
+                    }
                 }
-                getString(R.string.pulse_avg) -> {
-                    graphView.viewport.setMinY(30.0)
-                    graphView.viewport.setMaxY(120.0)
-                }
-                getString(R.string.hfvar) -> {
-                    graphView.viewport.setMinY(0.0)
-                    graphView.viewport.setMaxY(20.0)
-                }
-                getString(R.string.hfvar_avg) -> {
-                    graphView.viewport.setMinY(0.0)
-                    graphView.viewport.setMaxY(25.0)
-                }
-                getString(R.string.sleepstage) -> {
-                    graphView.viewport.setMinY(0.0)
-                    graphView.viewport.setMaxY(4.0)
-                }
-                getString(R.string.movement) -> {
-                    graphView.viewport.setMinY(0.0)
-                    graphView.viewport.setMaxY(25.0)
-                }
+
+                isXAxisBoundsManual = true
+                isScalable = true
+                isScrollable = true
+                setMinX(timeArrayList[0].toDouble())
+                setMaxX(timeArrayList[timeArrayList.size - 1].toDouble())
             }
-
-            graphView.viewport.isXAxisBoundsManual = true
-            graphView.viewport.isScalable = true
-            graphView.viewport.isScrollable = true
 
             val arrayListValues = when (spinnerDataType.selectedItem.toString()) {
                 getString(R.string.pulse) -> pulseArrayList
@@ -290,11 +295,11 @@ class StatisticsActivity: AppCompatActivity(), FetchingDataProgressFragment.ICan
                             val obj = JSONObject(jsonValues)
                             weakReference.get()!!.timeArrayList.add(obj.getLong("time"))
                             weakReference.get()!!.pulseArrayList.add(obj.getInt("pulse"))
-                            weakReference.get()!!.pulseAvgArrayList.add(obj.getInt("pulseAvg"))
+                            weakReference.get()!!.pulseAvgArrayList.add(obj.getInt("pulseAvg60"))
                             weakReference.get()!!.hfvarArrayList.add(obj.getInt("hfvar"))
-                            weakReference.get()!!.hfvarAvgArrayList.add(obj.getInt("hfvarAvg"))
+                            weakReference.get()!!.hfvarAvgArrayList.add(obj.getInt("hfvarAvg60"))
                             weakReference.get()!!.stageArrayList.add(obj.getInt("sleepStage"))
-                            weakReference.get()!!.movingArrayList.add(obj.getInt("isMovingCount"))
+                            weakReference.get()!!.movingArrayList.add(obj.getInt("isMoving"))
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }

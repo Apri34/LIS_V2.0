@@ -21,24 +21,27 @@ class SaveValuesService: Service() {
     private inner class ValueReceiver: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
 
-            //TODO Nach der Implementierung von SleepStageService schauen, ob die Werte noch passen (ob es die richtigen sind und die richtigen Datentypen)
             val extras = intent!!.extras!!
             val pulse = extras.getInt("pulse")
             val time = Calendar.getInstance().timeInMillis
-            val pulseAvg = extras.getInt("pulseAvg")
+            val pulseAvg60 = extras.getInt("pulseAvg60")
+            val pulseAvg20 = extras.getInt("pulseAvg20")
             val hfvar = extras.getInt("hfvar")
-            val hfvarAvg = extras.getInt("hfvarAvg")
+            val hfvarAvg60 = extras.getInt("hfvarAvg60")
+            val hfvarAvg20 = extras.getInt("hfvarAvg20")
             val sleepStage = extras.getInt("sleepStage")
-            val isMovingCount = extras.getInt("isMovingCount")
+            val isMoving = extras.getInt("isMoving")
 
             val jsonString = "{" +
                     "\"time\":$time," +
                     "\"pulse\":$pulse," +
-                    "\"pulseAvg\":$pulseAvg," +
+                    "\"pulseAvg60\":$pulseAvg60," +
+                    "\"pulseAvg20\":$pulseAvg20," +
                     "\"hfvar\":$hfvar," +
-                    "\"hfvarAvg\":$hfvarAvg," +
+                    "\"hfvarAvg60\":$hfvarAvg60," +
+                    "\"hfvarAvg20\":$hfvarAvg20," +
                     "\"sleepStage\":$sleepStage," +
-                    "\"isMovingCount\":$isMovingCount" +
+                    "\"isMoving\":$isMoving" +
                     "}\n"
 
             if(outputStream != null) {

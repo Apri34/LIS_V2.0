@@ -18,6 +18,12 @@ class SleepstageService: Service() {
     private var prevStage = Sleepstage.WAKE
     private var stage = Sleepstage.WAKE
     private var c = 0
+    private var pulseArray = ArrayList<Int>()
+    private var hfVarArray = ArrayList<Int>()
+    private var pulseAvg60 = 60
+    private var pulseAvg20 = 60
+    private var hfVarAvg60 = 0
+    private var hfVarAvg20 = 0
 
     private val valueReceiver = ValueReceiver()
 
@@ -28,23 +34,23 @@ class SleepstageService: Service() {
             val hfVar = extras.getString(HFVAR)!!
             val isMoving = extras.getInt(ISMOVING)
 
-            //TODO something
-
-            detectSleepStage()
-
-
-            //TODO put real values
-            sendValues(pulse.toInt(), 0, hfVar.toInt(), 0, 0, 0)
+            if(pulse.toInt() != 0 && hfVar.toInt() != 0) {
+                getNewValues(pulse.toInt(), hfVar.toInt())
+                detectSleepStage()
+                sendValues(pulse.toInt(), pulseAvg60, pulseAvg20, hfVar.toInt(), hfVarAvg60, hfVarAvg20, 0, isMoving)
+            }
         }
 
-        fun sendValues(pulse: Int, pulseAvg: Int, hfVar: Int, hfVarAvg: Int, sleepStage: Int, isMovingCount: Int) {
+        fun sendValues(pulse: Int, pulseAvg60: Int, pulseAvg20: Int, hfVar: Int, hfVarAvg60: Int, hfVarAvg20: Int, sleepStage: Int, isMoving: Int) {
             val ext = Bundle()
             ext.putInt("pulse", pulse)
-            ext.putInt("pulseAvg", pulseAvg)
+            ext.putInt("pulseAvg60", pulseAvg60)
+            ext.putInt("pulseAvg20", pulseAvg20)
             ext.putInt("hfvar", hfVar)
-            ext.putInt("hfvarAvg", hfVarAvg)
+            ext.putInt("hfvarAvg60", hfVarAvg60)
+            ext.putInt("hfvarAvg20", hfVarAvg20)
             ext.putInt("sleepStage", sleepStage)
-            ext.putInt("isMovingCount", isMovingCount)
+            ext.putInt("isMoving", isMoving)
             broadcastIntent.putExtras(ext)
             sendBroadcast(broadcastIntent)
         }
@@ -66,7 +72,6 @@ class SleepstageService: Service() {
     }
 
     private fun detectSleepStage() {
-        //TODO something
         c++
         prevStage = stage
         if(c == 10) {
@@ -82,5 +87,42 @@ class SleepstageService: Service() {
             sendBroadcast(intent)
             Log.i("Output", "Broadcast sent")
         }
+    }
+
+    private fun getNewValues(pulse: Int, hfVar: Int) {
+        pulseArray.add(pulse)
+        if(pulseArray.size > 60)
+            pulseArray.removeAt(0)
+
+        hfVarArray.add(hfVar)
+        if(hfVarArray.size > 60)
+            hfVarArray.removeAt(0)
+
+        var pulseSum60 = 0
+        var pulseSum20 = 0
+        for(i in 0 until pulseArray.size) {
+            pulseSum60 += pulseArray[i]
+            if(i > pulseArray.size - 20)
+                pulseSum20 += pulseArray[i]
+        }
+
+        pulseAvg60 = pulseSum60 / pulseArray.size
+        pulseAvg20 = if(pulseArray.size >= 20)
+            pulseSum20 / 20
+        else
+            pulseSum20 / pulseArray.size
+
+        var hfvarSum60 = 0
+        var hfvarSum20 = 0
+        for(i in 0 until hfVarArray.size) {
+            hfvarSum60 += hfVarArray[i]
+            if(i > hfVarArray.size - 20)
+                hfvarSum20 += hfVarArray[i]
+        }
+        hfVarAvg60 = hfvarSum60 / hfVarArray.size
+        hfVarAvg20 = if(hfVarArray.size > 20)
+            hfvarSum20 / 20
+        else
+            hfvarSum20 / hfVarArray.size
     }
 }

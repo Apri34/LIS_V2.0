@@ -68,5 +68,7 @@
     <string name="sleepstage">Sleepstage</string>
     <string name="movement">Movement</string>
     <string name="connecting_bt_device">Connecting bluetooth device</string>
+    <string name="please_select_stack">Please select a stack</string>
+    <string name="please_make_stack">Please make a stack</string>
 
 </resources>

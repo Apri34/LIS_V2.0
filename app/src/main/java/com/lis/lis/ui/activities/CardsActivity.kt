@@ -183,8 +183,13 @@ class CardsActivity: AppCompatActivity(), MakeNewStackFragment.IMakeNewStack, Ma
 
     fun newCard(@Suppress("unused_parameter") v: View) {
         val makeNewCardFragment = MakeNewCardFragment()
-        if(spinnerStack.selectedItem.toString() == getString(R.string.spinner_cards_choose_stack) || spinnerStack.selectedItem == null) {
-            Toast.makeText(this, getString(R.string.please_choose_type), Toast.LENGTH_LONG).show()
+        if(spinnerStack.selectedItem == null) {
+            Toast.makeText(this, getString(R.string.please_make_stack), Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if (spinnerStack.selectedItem.toString() == getString(R.string.spinner_cards_choose_stack)) {
+            Toast.makeText(this, getString(R.string.please_select_stack), Toast.LENGTH_LONG).show()
             return
         }
 

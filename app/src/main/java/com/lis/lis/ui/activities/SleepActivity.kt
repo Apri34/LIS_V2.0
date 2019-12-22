@@ -36,9 +36,9 @@ class SleepActivity: AppCompatActivity() {
         override fun onReceive(p0: Context?, intent: Intent?) {
             val extras = intent!!.extras
             if(extras != null) {
-                tvPulse.text = extras.getInt("pulseAvg").toString()
-                tvHFV.text = extras.getInt("hfvarAvg").toString()
-                tvMoving.text = extras.getInt("isMovingCount").toString()
+                tvPulse.text = extras.getInt("pulseAvg20").toString()
+                tvHFV.text = extras.getInt("hfvarAvg20").toString()
+                tvMoving.text = extras.getInt("isMoving").toString()
             }
         }
     }
@@ -85,6 +85,8 @@ class SleepActivity: AppCompatActivity() {
         btnSleep.isEnabled = false
         btnGetUp.visibility = View.VISIBLE
         btnGetUp.isEnabled = true
+        spStacks.visibility = View.INVISIBLE
+        spStacks.isEnabled = false
 
         if(spStacks.selectedItem != null) {
             startOutputService(spStacks.selectedItem.toString())
@@ -103,6 +105,8 @@ class SleepActivity: AppCompatActivity() {
         btnSleep.isEnabled = true
         btnGetUp.visibility = View.INVISIBLE
         btnGetUp.isEnabled = false
+        spStacks.visibility = View.VISIBLE
+        spStacks.isEnabled = true
 
         stopOutputService()
         stopSaveValuesService()
